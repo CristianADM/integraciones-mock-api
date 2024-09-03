@@ -1,0 +1,253 @@
+[
+    {
+        "httpRequest": {
+            "method": "POST",
+            "path": "/register-employees",
+            "headers": {
+                "Error500": [
+                    "true"
+                ]
+            }
+        },
+        "httpResponse": {
+            "statusCode": 500,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "errors": "Internal Server Error"
+            }
+        }
+    },
+    {
+        "httpRequest": {
+            "method": "POST",
+            "path": "/register-employees",
+            "headers": {
+                "secret-key": [
+                    ".*"
+                ]
+            },
+            "body": {
+                "type": "JSON_SCHEMA",
+                "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                        "profiles": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "firstName": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    },
+                                    "lastName": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    },
+                                    "gender": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    },
+                                    "civilStatus": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    },
+                                    "hiredDate": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "format": "date"
+                                    },
+                                    "birthDate": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "format": "date"
+                                    },
+                                    "email": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "format": "email"
+                                    },
+                                    "phoneNumber": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    },
+                                    "workPosition": {
+                                        "type": "object",
+                                        "properties": {
+                                            "code": {
+                                                "type": "string"
+                                            },
+                                            "denomination": {
+                                                "type": "string"
+                                            },
+                                            "workPositionCategory": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "code": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "denomination": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": []
+                                            },
+                                            "costCenter": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "code": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "denomination": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": []
+                                            },
+                                            "store": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "code": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "denomination": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "zipcode": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "country": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": []
+                                                    },
+                                                    "state": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": []
+                                                    },
+                                                    "city": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": []
+                                                    },
+                                                    "georefDistance": {
+                                                        "type": [
+                                                            "number",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "latitude": {
+                                                        "type": [
+                                                            "number",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "longitude": {
+                                                        "type": [
+                                                            "number",
+                                                            "null"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": []
+                                            }
+                                        },
+                                        "required": []
+                                    }
+                                },
+                                "required": []
+                            }
+                        }
+                    },
+                    "required": [
+                        "profiles"
+                    ]
+                }
+            }
+        },
+        "httpResponseTemplate": {
+            "templateType": "JAVASCRIPT",
+            "template": "var response = { registeredEmployees: [] }; var profiles = JSON.parse(request.bodyAsString).profiles; for (var i = 0; i < profiles.length; i++) { var profile = profiles[i]; var missingFields = []; if (!profile.firstName) missingFields.push('The firstName is required'); if (!profile.lastName) missingFields.push('The lastName is required'); if (!profile.gender) missingFields.push('The gender is required'); if (!profile.civilStatus) missingFields.push('The civilStatus is required'); if (!profile.hiredDate) missingFields.push('The hiredDate is required'); if (!profile.birthDate) missingFields.push('The birthDate is required'); if (!profile.email) missingFields.push('The email is required'); if (!profile.phoneNumber) missingFields.push('The phoneNumber is required'); if (!profile.workPosition || (!profile.workPosition.code && !profile.workPosition.denomination && Object.keys(profile.workPosition.workPositionCategory).length === 0 && Object.keys(profile.workPosition.costCenter).length === 0 && Object.keys(profile.workPosition.store).length === 3) ) { missingFields.push('The workPosition is required'); } else { var wp = profile.workPosition; if (!wp.code) missingFields.push('The workPosition code is required'); if (!wp.denomination) missingFields.push('The workPosition denomination is required'); if (!wp.workPositionCategory || Object.keys(wp.workPositionCategory).length === 0) { missingFields.push('The workPositionCategory is required') } else { if (!wp.workPositionCategory || !wp.workPositionCategory.code) missingFields.push('The workPositionCategory code is required'); if (!wp.workPositionCategory || !wp.workPositionCategory.denomination) missingFields.push('The workPositionCategory denomination is required'); } if (!wp.costCenter || Object.keys(wp.costCenter).length === 0) { missingFields.push('The costCenter is required') } else { if (!wp.costCenter || !wp.costCenter.code) missingFields.push('The costCenter code is required'); if (!wp.costCenter || !wp.costCenter.denomination) missingFields.push('The costCenter denomination is required'); } if (!wp.store || Object.keys(wp.store).length === 0) { missingFields.push('The store is required') } else { if (!wp.store || !wp.store.code) missingFields.push('The store code is required'); if (!wp.store || !wp.store.denomination) missingFields.push('The store denomination is required'); if (!wp.store || !wp.store.zipcode) missingFields.push('The store zipcode is required'); if (!wp.store || !wp.store.country || !wp.store.country.name) missingFields.push('The store country name is required'); if (!wp.store || !wp.store.state || !wp.store.state.name) missingFields.push('The store state name is required'); if (!wp.store || !wp.store.city || !wp.store.city.name) missingFields.push('The store city name is required'); } } var error = missingFields.length > 0 ? missingFields.join(', ') : null; response.registeredEmployees.push({ email: profile.email, employeeCode: error ? null : 'examplecode' + (i + 1), errors: error }); } return { statusCode: 200, body: response };",
+            "delay": {
+                "timeUnit": "MILLISECONDS",
+                "value": 100
+            }
+        }
+    },
+    {
+        "httpRequest": {
+            "method": "POST",
+            "path": "/register-employees"
+        },
+        "httpResponse": {
+            "statusCode": 403,
+            "body": {
+                "errors": "The secret-key is not authorized"
+            }
+        }
+    }
+]
